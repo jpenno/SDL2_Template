@@ -6,7 +6,7 @@
 #include <string>
 
 int main(int argc, char *args[]) {
-
+  // test
   App *app = new App();
 
   if (app->init()) {
