@@ -1,12 +1,13 @@
 #include "../include/App.h"
 #include "../include/Config.h"
+// #include "../include/Rectangle.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
 App::App() {}
 
-void App::run() {
+void App::Run() {
   // Load media
   if (!loadMedia()) {
     printf("Failed to load media!\n");
@@ -17,7 +18,7 @@ void App::run() {
     // Event handler
     SDL_Event e;
 
-    // While application is running
+    // While application is Running
     while (!quit) {
       // Handle events on queue
       while (SDL_PollEvent(&e) != 0) {
@@ -26,19 +27,12 @@ void App::run() {
           quit = true;
         }
       }
-
-      // Clear screen
-      SDL_RenderClear(m_renderer);
-
-      // Render texture to screen
-      SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
-
-      // Update screen
-      SDL_RenderPresent(m_renderer);
+      Draw();
     }
   }
 }
-bool App::init() {
+
+bool App::Init() {
   // Initialization flag
   bool success = true;
 
@@ -81,6 +75,14 @@ bool App::init() {
     }
   }
 
+  SDL_Rect fillRect2 = {100, 100, 100, 100};
+  Color color = Color{
+      0xFF,
+      0x00,
+      0x00,
+      0xFF,
+  };
+  r = FillRectangle(color, fillRect2);
   return success;
 }
 
@@ -98,7 +100,39 @@ bool App::loadMedia() {
   return success;
 }
 
-void App::close() {
+void App::Draw() {
+
+  // Clear screen
+  SDL_RenderClear(m_renderer);
+
+  // Render texture to screen
+  SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+
+  // Render filled quad
+  r.Draw(m_renderer);
+
+  // Render green outlined quad
+  SDL_Rect outlineRect = {SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6,
+                          SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3};
+  SDL_SetRenderDrawColor(m_renderer, 0x00, 0xFF, 0x00, 0xFF);
+  SDL_RenderDrawRect(m_renderer, &outlineRect);
+
+  // Draw blue horizontal line
+  SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0xFF, 0xFF);
+  SDL_RenderDrawLine(m_renderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH,
+                     SCREEN_HEIGHT / 2);
+
+  // Draw vertical line of yellow dots
+  SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0x00, 0xFF);
+  for (int i = 0; i < SCREEN_HEIGHT; i += 4) {
+    SDL_RenderDrawPoint(m_renderer, SCREEN_WIDTH / 2, i);
+  }
+
+  // Update screen
+  SDL_RenderPresent(m_renderer);
+}
+
+void App::Close() {
   // Free loaded image
   SDL_DestroyTexture(m_texture);
   m_texture = NULL;
@@ -112,23 +146,24 @@ void App::close() {
   // Quit SDL subsystems
   IMG_Quit();
   SDL_Quit();
+  // delete r;
 }
 
-SDL_Texture *App::loadTexture(std::string path) {
+SDL_Texture *App::loadTexture(std::string a_path) {
   // The final texture
   SDL_Texture *newTexture = NULL;
 
   // Load image at specified path
-  SDL_Surface *loadedSurface = IMG_Load(path.c_str());
+  SDL_Surface *loadedSurface = IMG_Load(a_path.c_str());
   if (loadedSurface == NULL) {
-    printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(),
+    printf("Unable to load image %s! SDL_image Error: %s\n", a_path.c_str(),
            IMG_GetError());
   } else {
     // Create texture from surface pixels
     newTexture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
     if (newTexture == NULL) {
-      printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(),
-             SDL_GetError());
+      printf("Unable to create texture from %s! SDL Error: %s\n",
+             a_path.c_str(), SDL_GetError());
     }
 
     // Get rid of old loaded surface

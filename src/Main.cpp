@@ -6,14 +6,13 @@
 #include <string>
 
 int main(int argc, char *args[]) {
-  // test
   App *app = new App();
 
-  if (app->init()) {
-    app->run();
+  if (app->Init()) {
+    app->Run();
   }
 
-  app->close();
+  app->Close();
 
   delete app;
 
