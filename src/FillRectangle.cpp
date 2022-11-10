@@ -2,10 +2,8 @@
 
 FillRectangle::FillRectangle() {}
 
-FillRectangle::FillRectangle(Color a_color, SDL_Rect a_rect) {
-  m_rect = a_rect;
-  m_color = a_color;
-}
+FillRectangle::FillRectangle(Color a_color, SDL_Rect a_rect)
+    : Shape(a_color, a_rect) {}
 
 void FillRectangle::Draw(SDL_Renderer *a_renderer) {
   // Render filled quad

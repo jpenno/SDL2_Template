@@ -2,6 +2,7 @@
 #define APP_H_
 
 #include "../include/FillRectangle.h"
+#include "../include/Rectangle.h"
 #include <string>
 
 class SDL_Texture;
@@ -34,5 +35,6 @@ private:
   SDL_Texture *m_texture = nullptr;
 
   FillRectangle r;
+  Rectangle test_r;
 };
 #endif // APP_H_

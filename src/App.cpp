@@ -1,6 +1,5 @@
 #include "../include/App.h"
 #include "../include/Config.h"
-// #include "../include/Rectangle.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
@@ -47,7 +46,7 @@ bool App::Init() {
     }
 
     // Create window
-    m_window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED,
+    m_window = SDL_CreateWindow("SDL Template", SDL_WINDOWPOS_UNDEFINED,
                                 SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
                                 SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (m_window == NULL) {
@@ -83,6 +82,11 @@ bool App::Init() {
       0xFF,
   };
   r = FillRectangle(color, fillRect2);
+  fillRect2.x += 100;
+  fillRect2.y += 100;
+  color.Red = 0x00;
+  color.Blue = 0xFF;
+  test_r = Rectangle(color, fillRect2);
   return success;
 }
 
@@ -110,12 +114,11 @@ void App::Draw() {
 
   // Render filled quad
   r.Draw(m_renderer);
+  r.SetX((float)(r.GetX() + 0.001f));
 
   // Render green outlined quad
-  SDL_Rect outlineRect = {SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6,
-                          SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3};
-  SDL_SetRenderDrawColor(m_renderer, 0x00, 0xFF, 0x00, 0xFF);
-  SDL_RenderDrawRect(m_renderer, &outlineRect);
+  test_r.Draw(m_renderer);
+  test_r.SetX((float)(test_r.GetX() + 0.001f));
 
   // Draw blue horizontal line
   SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0xFF, 0xFF);

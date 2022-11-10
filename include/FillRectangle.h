@@ -1,5 +1,5 @@
-#ifndef RECTANGLE_H_
-#define RECTANGLE_H_
+#ifndef FILLRECTANGLE_H_
+#define FILLRECTANGLE_H_
 #include "Shape.h"
 #include <SDL2/SDL.h>
 
@@ -10,7 +10,6 @@ public:
   void Draw(SDL_Renderer *r);
 
 private:
-  SDL_Rect m_rect;
 };
 
-#endif // RECTANBLE_H_
+#endif // FILLRECTANGLE_H_
