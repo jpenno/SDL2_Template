@@ -1,7 +1,6 @@
 #ifndef FILLRECTANGLE_H_
 #define FILLRECTANGLE_H_
 #include "Shape.h"
-#include <SDL2/SDL.h>
 
 class FillRectangle : public Shape {
 public:

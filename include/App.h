@@ -2,6 +2,7 @@
 #define APP_H_
 
 #include "../include/FillRectangle.h"
+#include "../include/Line.h"
 #include "../include/Rectangle.h"
 #include <string>
 
@@ -36,5 +37,6 @@ private:
 
   FillRectangle r;
   Rectangle test_r;
+  Line line;
 };
 #endif // APP_H_

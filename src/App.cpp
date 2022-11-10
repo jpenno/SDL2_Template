@@ -74,6 +74,7 @@ bool App::Init() {
     }
   }
 
+  // init fillRectangle
   SDL_Rect fillRect2 = {100, 100, 100, 100};
   Color color = Color{
       0xFF,
@@ -82,11 +83,21 @@ bool App::Init() {
       0xFF,
   };
   r = FillRectangle(color, fillRect2);
+
+  // init outline rectangle
   fillRect2.x += 100;
   fillRect2.y += 100;
   color.Red = 0x00;
   color.Blue = 0xFF;
   test_r = Rectangle(color, fillRect2);
+
+  // init a solid line
+  fillRect2.x = 100;
+  fillRect2.y = 100;
+  fillRect2.w = SCREEN_WIDTH - 100;
+  fillRect2.h = 100;
+  line = Line(color, fillRect2);
+
   return success;
 }
 
@@ -119,6 +130,9 @@ void App::Draw() {
   // Render green outlined quad
   test_r.Draw(m_renderer);
   test_r.SetX((float)(test_r.GetX() + 0.001f));
+
+  // Render horzontal line
+  line.Draw(m_renderer);
 
   // Draw blue horizontal line
   SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0xFF, 0xFF);

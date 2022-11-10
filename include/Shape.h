@@ -16,7 +16,7 @@ class Shape {
 public:
   Shape();
   Shape(Color a_color, SDL_Rect a_rect);
-  virtual void Draw(SDL_Renderer *m_renderer) = 0;
+  virtual void Draw(SDL_Renderer *m_renderer);
 
   void SetX(float a_x);
   void SetY(float a_y);
